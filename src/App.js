@@ -2,28 +2,29 @@ import React, { useState, useEffect, useRef } from 'react'
 import logo from './logo.svg';
 import './App.css';
 import Chessboard from 'chessboardjsx';
-import Chess, { ChessInstance } from "chess.js";
+import Chess from "chess.js";
 import MoveHistory from './components/MoveHistory';
-
+import DataVisualization from './components/DataVisualization'
 function App() {
   const [chess] = useState(new Chess("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"));
   const [fen, setFen] = useState(chess.fen());
   const [movesHistory, setMovesHistory] = useState([]);
   const [selectedBot, setSelectedBot] = useState();
+  const [randomBotAvaliableMoves, setRandomBotAvaliableMoves] = useState([]);
   const [boardSize, setBoardSize] = useState(460);
   const ref = useRef(null);
 
   useEffect(() => {
     console.log(ref.current)
     setBoardSize(ref.current.offsetWidth);
-  }, [ref.current])
-
+  }, [])
 
   // add playermove to history
   const updatePlayerHistory = (newMove) => {
     const currentMovesHistory = movesHistory;
     const pieceType = chess.get(newMove.to).type.toUpperCase();
     let move;
+
     // do not display pawn
     if (pieceType === "P") {
       move = { playerMove: `${newMove.to}` }
@@ -31,6 +32,7 @@ function App() {
     else {
       move = { playerMove: `${pieceType}${newMove.to}` }
     }
+
     currentMovesHistory.push(move);
     setMovesHistory(currentMovesHistory);
   }
@@ -38,13 +40,18 @@ function App() {
   const handlePlayerMove = (playerMove) => {
     // Checks if playermove is valid
     if (chess.move(playerMove)) {
+
       // add move to history
       updatePlayerHistory(playerMove);
 
       // computer response random
       setTimeout(() => {
+
         // Get list of valid moves
         const moves = chess.moves();
+
+        // update state for data vizualization
+        setRandomBotAvaliableMoves(moves);
 
         // If valid move is avaliable selects random and updates chessboard
         if (moves.length > 0) {
@@ -84,9 +91,7 @@ function App() {
       </div>
       <div className="utility-container">
         <MoveHistory movesHistory={movesHistory} />
-        <div className="data-visualization">
-          <h2>Data Viz</h2>
-        </div>
+        <DataVisualization selectedBot={selectedBot} randomBotAvaliableMoves={randomBotAvaliableMoves} />
       </div>
     </div>
   );
