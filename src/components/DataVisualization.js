@@ -10,7 +10,7 @@ const DataVisualization = (props) => {
     console.log(randomBotAvaliableMoves);
     return (
         <div className="data-visualization">
-            <h2>Data Viz Random Bot</h2>
+            <h2>Data Visualization Random Bot</h2>
             <p>Selecting from avaliable moves</p>
             <ul className="avaliable-moves">
                 {listAvaliableMoves}
