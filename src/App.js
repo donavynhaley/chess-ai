@@ -5,7 +5,7 @@ import Chess from "chess.js";
 import MoveHistory from './components/MoveHistory';
 import DataVisualization from './components/DataVisualization';
 import NavBar from './components/NavBar';
-
+import randomBot from './components/Bots/randomBot';
 const startingFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 
 function App() {
@@ -63,26 +63,7 @@ function App() {
       updatePlayerHistory(playerMove);
 
       // computer response random
-      setTimeout(() => {
-
-        // Get list of valid moves
-        const moves = chess.moves();
-
-        // update state for data vizualization
-        setRandomBotAvaliableMoves(moves);
-
-        // If valid move is avaliable selects random and updates chessboard
-        if (moves.length > 0) {
-          const computerMove = moves[Math.floor(Math.random() * moves.length)];
-          chess.move(computerMove);
-
-          // add move to history
-          updateComputerHistory(computerMove);
-
-          // update chessboard
-          setFen(chess.fen());
-        }
-      }, 300)
+      randomBot(chess, updateComputerHistory, setRandomBotAvaliableMoves, setFen)
 
       // update chessboard
       setFen(chess.fen());
