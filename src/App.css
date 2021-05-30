@@ -7,12 +7,13 @@
   display: flex;
   flex-direction: column;
   width: 70vw;
-  height: 96vh;
+  height: 90vh;
   align-items: center;
   justify-content: center;
 }
 .chessboard-container{
   width: 60%;
+  margin-top: 7vh;
 }
 
 .utility-container {
@@ -82,15 +83,6 @@
   justify-content: space-around;
   align-items: center;
 }
-.button {
-  background-color: #2D2D2B;
-  color: white;
-  font-size: 20px;
-  padding: 10px 60px;
-  border-radius: 5px;
-  margin: 10px 0px;
-  cursor: pointer;
-}
 .navbar {
   display: flex;
   position: absolute;
@@ -99,5 +91,6 @@
   margin: 0 ;
   background-color:  #2D2D2B;
   top: 0;
+  height: 10vh;
   width: 70vw;
 }
