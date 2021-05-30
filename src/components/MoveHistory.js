@@ -18,7 +18,7 @@ const MoveHistory = props => {
 
     return (
         <div className="move-history">
-            <h2>test</h2>
+            <h2>Move History</h2>
             {listMoveHistory}
         </div>
     )

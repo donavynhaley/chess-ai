@@ -57,10 +57,9 @@ function App() {
   }
   return (
     <div className="app-container">
-      <h1>Chess AI</h1>
       <div className="chess-container">
+        <h1>Chess AI</h1>
         <Chessboard
-          width={400}
           position={fen}
           onDrop={(move) => handlePlayerMove({
             from: move.sourceSquare,
@@ -74,7 +73,7 @@ function App() {
         <MoveHistory movesHistory={movesHistory} chess={chess} />
 
         <div className="data-visualization">
-
+          <h2>Data Viz</h2>
         </div>
       </div>
     </div>
