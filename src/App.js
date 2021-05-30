@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import logo from './logo.svg';
 import './App.css';
 import Chessboard from 'chessboardjsx';
@@ -10,18 +10,26 @@ function App() {
   const [fen, setFen] = useState(chess.fen());
   const [movesHistory, setMovesHistory] = useState([]);
   const [selectedBot, setSelectedBot] = useState();
+  const [boardSize, setBoardSize] = useState(460);
+  const ref = useRef(null);
 
-  // add move to history
-  const updateHistory = (newMove) => {
+  useEffect(() => {
+    console.log(ref.current)
+    setBoardSize(ref.current.offsetWidth);
+  }, [ref.current])
+
+
+  // add playermove to history
+  const updatePlayerHistory = (newMove) => {
     const currentMovesHistory = movesHistory;
     const pieceType = chess.get(newMove.to).type.toUpperCase();
     let move;
     // do not display pawn
     if (pieceType === "P") {
-      move = `${newMove.to}`
+      move = { playerMove: `${newMove.to}` }
     }
     else {
-      move = `${pieceType}${newMove.to}`
+      move = { playerMove: `${pieceType}${newMove.to}` }
     }
     currentMovesHistory.push(move);
     setMovesHistory(currentMovesHistory);
@@ -31,7 +39,7 @@ function App() {
     // Checks if playermove is valid
     if (chess.move(playerMove)) {
       // add move to history
-      updateHistory(playerMove);
+      updatePlayerHistory(playerMove);
 
       // computer response random
       setTimeout(() => {
@@ -44,8 +52,10 @@ function App() {
           chess.move(computerMove);
 
           // add move to history
-          const currentMovesHistory = movesHistory;
-          currentMovesHistory.push(computerMove);
+          const currentMove = movesHistory[movesHistory.length - 1];
+          const newMove = { ...currentMove, computerMove: computerMove }
+          movesHistory[movesHistory.length - 1] = newMove;
+
           // update chessboard
           setFen(chess.fen());
         }
@@ -59,19 +69,21 @@ function App() {
     <div className="app-container">
       <div className="chess-container">
         <h1>Chess AI</h1>
-        <Chessboard
-          position={fen}
-          onDrop={(move) => handlePlayerMove({
-            from: move.sourceSquare,
-            to: move.targetSquare,
-            promotion: "q",
-          })}
+        <div ref={ref} className="chessboard-container">
+          <Chessboard
+            width={boardSize}
+            position={fen}
+            onDrop={(move) => handlePlayerMove({
+              from: move.sourceSquare,
+              to: move.targetSquare,
+              promotion: "q",
+            })}
 
-        />
+          />
+        </div>
       </div>
       <div className="utility-container">
-        <MoveHistory movesHistory={movesHistory} chess={chess} />
-
+        <MoveHistory movesHistory={movesHistory} />
         <div className="data-visualization">
           <h2>Data Viz</h2>
         </div>
