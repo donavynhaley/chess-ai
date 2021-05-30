@@ -4,6 +4,7 @@ import Chessboard from 'chessboardjsx';
 import Chess from "chess.js";
 import MoveHistory from './components/MoveHistory';
 import DataVisualization from './components/DataVisualization';
+import NavBar from './components/NavBar';
 
 const startingFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 
@@ -18,7 +19,6 @@ function App() {
   const ref = useRef(null);
 
   useEffect(() => {
-    console.log(ref.current);
     setBoardSize(ref.current.offsetWidth);
 
   }, [])
@@ -128,37 +128,39 @@ function App() {
 
 
   return (
-    <div className="app-container">
-      <div class="modal">
-        <div class="modal-content">
-          <span class="close">&times;</span>
-          <div className="modal-text">
-            <h2>Game Over</h2>
-            <p>{gameOverText}</p>
-            <button className="button" onClick={(e) => { resetGame() }}>Play Again?</button>
+    <>
+      <NavBar />
+      <div className="app-container">
+        <div class="modal">
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <div className="modal-text">
+              <h2>Game Over</h2>
+              <p>{gameOverText}</p>
+              <button className="button" onClick={(e) => { resetGame() }}>Play Again?</button>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="chess-container">
-        <h1>Chess AI</h1>
-        <div ref={ref} className="chessboard-container">
-          <Chessboard
-            width={boardSize}
-            position={fen}
-            onDrop={(move) => handlePlayerMove({
-              from: move.sourceSquare,
-              to: move.targetSquare,
-              promotion: "q",
-            })}
+        <div className="chess-container">
+          <div ref={ref} className="chessboard-container">
+            <Chessboard
+              width={boardSize}
+              position={fen}
+              onDrop={(move) => handlePlayerMove({
+                from: move.sourceSquare,
+                to: move.targetSquare,
+                promotion: "q",
+              })}
 
-          />
+            />
+          </div>
+        </div>
+        <div className="utility-container">
+          <MoveHistory movesHistory={movesHistory} />
+          <DataVisualization selectedBot={selectedBot} randomBotAvaliableMoves={randomBotAvaliableMoves} />
         </div>
       </div>
-      <div className="utility-container">
-        <MoveHistory movesHistory={movesHistory} />
-        <DataVisualization selectedBot={selectedBot} randomBotAvaliableMoves={randomBotAvaliableMoves} />
-      </div>
-    </div>
+    </>
   );
 }
 

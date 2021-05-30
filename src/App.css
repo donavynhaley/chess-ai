@@ -91,3 +91,13 @@
   margin: 10px 0px;
   cursor: pointer;
 }
+.navbar {
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  margin: 0 ;
+  background-color:  #2D2D2B;
+  top: 0;
+  width: 70vw;
+}
