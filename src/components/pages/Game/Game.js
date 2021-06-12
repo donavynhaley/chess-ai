@@ -8,12 +8,12 @@ import randomBot from '../../bots/randomBot';
 import SimpleModal from '../../common/SimpleModel';
 
 const startingFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
-
+const allBots = ["Random", "MiniMax", "AlphaBeta", "Stockfish"]
 function Game() {
     const [chess] = useState(new Chess(startingFen));
     const [fen, setFen] = useState(chess.fen());
     const [movesHistory, setMovesHistory] = useState([]);
-    const [selectedBot, setSelectedBot] = useState();
+    const [selectedBot, setSelectedBot] = useState(allBots[0]);
     const [gameOverText, setGameOverText] = useState('');
     const [randomBotAvaliableMoves, setRandomBotAvaliableMoves] = useState([]);
     const [boardSize, setBoardSize] = useState(460);
@@ -107,7 +107,7 @@ function Game() {
 
     return (
         <>
-            <NavBar />
+            <NavBar selectedBot={selectedBot} setSelectedBot={setSelectedBot} allBots={allBots} />
             <div className="app-container">
                 <SimpleModal openModal={openModal} setOpenModal={setOpenModal} resetGame={resetGame} title={"Game Over"} desc={`The game ended with a ${gameOverText}`} />
                 <div className="chess-container">

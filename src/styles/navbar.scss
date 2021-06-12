@@ -1,11 +1,23 @@
 .navbar {
     display: flex;
     position: absolute;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     margin: 0 ;
     background-color: $pg-dark-grey;
     top: 0;
     height: 10vh;
     width: 70vw;
+    .MuiSelect-icon {
+      color: white;
+    }
+    .MuiSelect-nativeInput{
+      border-color: white ;
+      color: white;
+    }
+
+  }
+  .MuiMenu-list{
+    color: white;
+    background-color: $pg-grey;
   }
