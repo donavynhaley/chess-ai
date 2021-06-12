@@ -9,8 +9,8 @@ const DataVisualization = (props) => {
     // updates return based on what bot is selected. 
     return (
         <div className="data-visualization">
-            <h2>Data Visualization Random Bot</h2>
-            <p>Selecting from avaliable moves</p>
+            <h2>Data Visualization</h2>
+            <p>Selecting random from avaliable moves</p>
             <ul className="avaliable-moves">
                 {listAvaliableMoves}
             </ul>
