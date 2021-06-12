@@ -1,7 +1,5 @@
 import React from 'react'
-import './App.css';
 import NavBar from './components/common/NavBar'
-import LandingPage from './components/pages/LandingPage'
 import { Game } from './components/pages/Game';
 import {
   Route,

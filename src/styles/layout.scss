@@ -1,0 +1,23 @@
+.app-container {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+  }       
+  .chess-container {
+    display: flex;
+    flex-direction: column;
+    width: 70vw;
+    height: 90vh;
+    align-items: center;
+    justify-content: center;
+  }
+  .chessboard-container{
+    width: 60%;
+    margin-top: 7vh;
+  }
+  
+  .utility-container {
+    width: 30vw;
+    display: flex;
+    flex-direction: column;
+  }

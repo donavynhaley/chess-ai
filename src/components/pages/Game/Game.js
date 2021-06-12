@@ -5,7 +5,8 @@ import MoveHistory from './MoveHistory';
 import DataVisualization from './DataVisualization';
 import NavBar from '../../common/NavBar';
 import randomBot from '../../bots/randomBot';
-import Button from '../../common/Button'
+import SimpleModal from '../../common/SimpleModel';
+
 const startingFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 
 function Game() {
@@ -16,10 +17,11 @@ function Game() {
     const [gameOverText, setGameOverText] = useState('');
     const [randomBotAvaliableMoves, setRandomBotAvaliableMoves] = useState([]);
     const [boardSize, setBoardSize] = useState(460);
+    const [openModal, setOpenModal] = useState(false)
     const ref = useRef(null);
 
     useEffect(() => {
-        setBoardSize(ref.current.offsetWidth);
+        setBoardSize(ref.current.offsetWidth - 40);
 
     }, [])
 
@@ -55,6 +57,7 @@ function Game() {
         movesHistory[movesHistory.length - 1] = newMove;
     }
 
+    // Handles player move and calls bots move
     const handlePlayerMove = (playerMove) => {
         // Checks if playermove is valid
         if (chess.move(playerMove)) {
@@ -69,16 +72,15 @@ function Game() {
             setFen(chess.fen());
         }
     }
+
     const resetGame = () => {
         // reset board and game
         setFen(startingFen);
         chess.reset();
         setMovesHistory([]);
-
-        // close modal
-        const modal = document.querySelector(".modal");
-        modal.style.display = "none"
+        setOpenModal(false)
     }
+
     const handleGameOver = () => {
         // Check how game ended
         if (chess.in_checkmate()) {
@@ -97,13 +99,8 @@ function Game() {
             setGameOverText("Insufficient Material")
         }
 
-        // Modal Logic
-        const modal = document.querySelector(".modal");
-        const closeBtn = document.querySelector(".close");
-        modal.style.display = "block";
-        closeBtn.addEventListener("click", () => {
-            modal.style.display = "none"
-        })
+        // Open game over modal
+        setOpenModal(true)
 
     }
 
@@ -112,16 +109,7 @@ function Game() {
         <>
             <NavBar />
             <div className="app-container">
-                <div class="modal">
-                    <div class="modal-content">
-                        <span class="close">&times;</span>
-                        <div className="modal-text">
-                            <h2>Game Over</h2>
-                            <p>{gameOverText}</p>
-                            <Button text={"Play Again?"} onClick={(e) => { resetGame() }}></Button>
-                        </div>
-                    </div>
-                </div>
+                <SimpleModal openModal={openModal} setOpenModal={setOpenModal} resetGame={resetGame} title={"Game Over"} desc={`The game ended with a ${gameOverText}`} />
                 <div className="chess-container">
                     <div ref={ref} className="chessboard-container">
                         <Chessboard
