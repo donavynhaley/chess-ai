@@ -5,6 +5,7 @@ import MoveHistory from './MoveHistory';
 import DataVisualization from './DataVisualization';
 import NavBar from '../../common/NavBar';
 import randomBot from '../../bots/randomBot';
+import MiniMax from '../../bots/MiniMax'
 import SimpleModal from '../../common/SimpleModel';
 
 const startingFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
@@ -13,7 +14,7 @@ function Game() {
     const [chess] = useState(new Chess(startingFen));
     const [fen, setFen] = useState(chess.fen());
     const [movesHistory, setMovesHistory] = useState([]);
-    const [selectedBot, setSelectedBot] = useState(allBots[0]);
+    const [selectedBot, setSelectedBot] = useState(allBots[1]);
     const [gameOverText, setGameOverText] = useState('');
     const [randomBotAvaliableMoves, setRandomBotAvaliableMoves] = useState([]);
     const [boardSize, setBoardSize] = useState(460);
@@ -66,7 +67,12 @@ function Game() {
             updatePlayerHistory(playerMove);
 
             // computer response random
-            randomBot(chess, updateComputerHistory, setRandomBotAvaliableMoves, setFen)
+            if (selectedBot === allBots[0]) {
+                randomBot(chess, updateComputerHistory, setRandomBotAvaliableMoves, setFen)
+            }
+            else if (selectedBot === allBots[1]) {
+                MiniMax(chess, updateComputerHistory, setRandomBotAvaliableMoves, setFen)
+            }
 
             // update chessboard
             setFen(chess.fen());
