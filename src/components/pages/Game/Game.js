@@ -136,7 +136,7 @@ function Game() {
                 allStartingPositions={allStartingPositions}
             />
             <div className="app-container">
-                <SimpleModal openModal={openModal} setOpenModal={setOpenModal} resetGame={resetGame} title={"Game Over"} desc={`The game ended with a ${gameOverText}`} />
+                <SimpleModal openModal={openModal} setOpenModal={setOpenModal} title={"Game Over"} desc={`The game ended with a ${gameOverText}`} onClick={resetGame} buttonText="Play Again?" />
                 <div className="chess-container">
                     <div ref={ref} className="chessboard-container">
                         <Chessboard

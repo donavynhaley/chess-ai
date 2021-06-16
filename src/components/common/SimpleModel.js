@@ -6,7 +6,7 @@ import Button from './Button'
 
 
 const SimpleModel = (props) => {
-    const { openModal, setOpenModal, resetGame, title, desc } = props;
+    const { openModal, setOpenModal, title, desc, onClick, buttonText } = props;
 
     const handleClose = () => {
         setOpenModal(false)
@@ -15,13 +15,14 @@ const SimpleModel = (props) => {
     const body = (
         <div className="simple-modal-content">
             <h2 className="simple-modal-title">{title}</h2>
-            <p className="simple-modal-description">
+            <div className="simple-modal-description">
                 {desc}
-            </p>
-            <Button onClick={resetGame} text={"Play Again?"} />
+            </div>
+            <Button onClick={onClick} text={buttonText} />
             <SimpleModel />
         </div>
     )
+
     return (
         <div class="modal-container">
             <Modal

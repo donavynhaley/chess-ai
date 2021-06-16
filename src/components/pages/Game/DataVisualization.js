@@ -1,8 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Button from '@material-ui/core/Button';
-
+import TreeVisualization from './TreeVisualization';
+import SimpleModal from '../../common/SimpleModel'
 const DataVisualization = (props) => {
     const { selectedBot, randomBotAvaliableMoves, allBots, evalCount } = props;
+    const [openModal, setOpenModal] = useState(false);
+
+    const handleClose = () => {
+        setOpenModal(false)
+    }
+
+    const handleOpen = () => {
+        console.log("opens")
+        setOpenModal(true)
+    }
 
     const randomBot = () => {
         const listAvaliableMoves = randomBotAvaliableMoves.map((move) => {
@@ -20,8 +31,10 @@ const DataVisualization = (props) => {
     const miniMaxBot = () => {
         return (
             <>
+
+                <SimpleModal openModal={openModal} setOpenModal={setOpenModal} title={"Tree"} desc={<TreeVisualization />} onClick={handleClose} buttonText="Close Modal" />
                 <p>{`Postions Evaluated: ${evalCount.toLocaleString()}`}</p>
-                <Button variant="outlined" color="secondary">
+                <Button variant="outlined" color="secondary" onClick={handleOpen}>
                     See Tree
                 </Button>
             </>
