@@ -23,8 +23,9 @@ function Game() {
     const [movesHistory, setMovesHistory] = useState([]);
     const [selectedBot, setSelectedBot] = useState(allBots[1]);
     const [selectedPos, setSelectedPos] = useState(allStartingPositions[0].fen)
+    const [evalCount, setEvalCount] = useState(0)
     const [gameOverText, setGameOverText] = useState('');
-    const [randomBotAvaliableMoves, setRandomBotAvaliableMoves] = useState([""]);
+    const [randomBotAvaliableMoves, setRandomBotAvaliableMoves] = useState([]);
     const [boardSize, setBoardSize] = useState(460);
     const [openModal, setOpenModal] = useState(false)
     const ref = useRef(null);
@@ -87,10 +88,8 @@ function Game() {
                 randomBot(chess, updateComputerHistory, setRandomBotAvaliableMoves, setFen)
             }
             else if (selectedBot === allBots[1]) {
-                MiniMax(chess, updateComputerHistory, setFen)
+                MiniMax(chess, updateComputerHistory, setFen, setEvalCount)
             }
-
-
         }
     }
 
@@ -153,7 +152,7 @@ function Game() {
                 </div>
                 <div className="utility-container">
                     <MoveHistory movesHistory={movesHistory} />
-                    <DataVisualization selectedBot={selectedBot} randomBotAvaliableMoves={randomBotAvaliableMoves} />
+                    <DataVisualization selectedBot={selectedBot} randomBotAvaliableMoves={randomBotAvaliableMoves} allBots={allBots} evalCount={evalCount} />
                 </div>
             </div>
         </>

@@ -9,29 +9,34 @@ QueenValueMg = 2538,
 */
 
 let pieceValues = new Map()
+// Black
 pieceValues['p'] = 128;
 pieceValues['n'] = 781;
-pieceValues['b'] = 128;
+pieceValues['b'] = 825;
 pieceValues['r'] = 1276;
 pieceValues['q'] = 2538;
 pieceValues['k'] = 9999;
 
-const getBoardEvaluation = (board) => {
+// White
+pieceValues['P'] = -128;
+pieceValues['N'] = -781;
+pieceValues['B'] = -825;
+pieceValues['R'] = -1276;
+pieceValues['Q'] = -2538;
+pieceValues['K'] = -9999;
+
+// returns total piece values
+const getBoardEvaluation = (fen) => {
     let count = 0;
-    for (let i = 0; i < board.length; i++) {
-        for (let j = 0; j < board[i].length; j++) {
-            if (board[i][j] === null)
-                continue
-            let piece = board[i][j].type
-            let color = board[i][j].color
-            if (color === 'b') {
-                count += pieceValues[piece]
-            }
-            else {
-                count -= pieceValues[piece]
-            }
-        }
+    for (let i = 0; i < fen.length; i++) {
+        // Breaks after pieces string ends. All fens have a space after board declaration
+        if (fen.charAt(i) === " ")
+            break
+
+        if (pieceValues[fen.charAt(i)] !== undefined)
+            count += pieceValues[fen.charAt(i)]
     }
+
     return count
 }
 
