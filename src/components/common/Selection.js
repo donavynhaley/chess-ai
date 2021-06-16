@@ -22,13 +22,13 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const SelectBot = (props) => {
-    const { selectedBot, setSelectedBot, allBots } = props.props;
+const Selection = (props) => {
+    const { selected, setSelected, allOptions, title } = props;
     const [open, setOpen] = useState(false);
     const classes = useStyles();
 
     const handleChange = (event) => {
-        setSelectedBot(event.target.value);
+        setSelected(event.target.value);
     };
 
     const handleClose = () => {
@@ -44,19 +44,25 @@ const SelectBot = (props) => {
 
             <FormControl className={classes.formControl}>
                 <div>
-                    <InputLabel className={classes.select} id="select-label">Select a bot</InputLabel>
+                    <InputLabel className={classes.select} id="select-label">{title}</InputLabel>
                     <Select
                         labelId="select-label"
                         id="open-select"
                         open={open}
                         onClose={handleClose}
                         onOpen={handleOpen}
-                        value={selectedBot}
+                        value={selected}
                         onChange={handleChange}
                         className={classes.select}
                     >
-                        {allBots && allBots.map((bot) => {
-                            return <MenuItem value={bot}>{bot}</MenuItem>
+                        {allOptions && allOptions.map((option, key) => {
+                            if (typeof (option) == "string") {
+                                return <MenuItem key={key} value={option}>{option}</MenuItem>
+
+                            }
+                            else {
+                                return <MenuItem key={key} value={option.fen}>{option.name}</MenuItem>
+                            }
                         })}
                     </Select>
                 </div>
@@ -65,4 +71,4 @@ const SelectBot = (props) => {
     )
 }
 
-export default SelectBot
+export default Selection

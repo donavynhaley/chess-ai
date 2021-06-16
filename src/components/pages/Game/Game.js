@@ -12,8 +12,8 @@ const startingFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 const allBots = ["Random", "MiniMax", "AlphaBeta", "Stockfish"]
 const allStartingPositions = [
     { name: "Start", fen: startingFen },
-    { name: "Ruy Lopez", fen: "r1bqkbnr/pppp1ppp/2n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 0 1" },
-    { name: "Italian Game", fen: "r1bqkbnr/pppp1ppp/2n5/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 0 1" },
+    { name: "Caro-Kann Defense", fen: "rnbqkbnr/pp1ppppp/2p5/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 1" },
+    { name: "Pirc Defense", fen: "rnbqkbnr/ppp1pppp/3p4/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 1" },
     { name: "Sicilian Defense", fen: "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 1" },
     { name: "French Defense", fen: "rnbqkbnr/pppp1ppp/4p3/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 1" },
 ]
@@ -22,7 +22,7 @@ function Game() {
     const [fen, setFen] = useState(chess.fen());
     const [movesHistory, setMovesHistory] = useState([]);
     const [selectedBot, setSelectedBot] = useState(allBots[1]);
-    const [selectedPos, setSelectedPos] = useState(allStartingPositions[0])
+    const [selectedPos, setSelectedPos] = useState(allStartingPositions[0].fen)
     const [gameOverText, setGameOverText] = useState('');
     const [randomBotAvaliableMoves, setRandomBotAvaliableMoves] = useState([""]);
     const [boardSize, setBoardSize] = useState(460);
@@ -30,9 +30,15 @@ function Game() {
     const ref = useRef(null);
 
     useEffect(() => {
-        setBoardSize(ref.current.offsetWidth - 40);
+        console.log(ref.current.offsetWidth)
+        setBoardSize(ref.current.offsetWidth);
 
     }, [])
+
+    useEffect(() => {
+        resetGame()
+
+    }, [selectedPos])
 
     useEffect(() => {
         // Check for win
@@ -91,7 +97,7 @@ function Game() {
     const resetGame = () => {
         // reset board and game
         setFen(selectedPos);
-        chess.reset();
+        chess.load(selectedPos);
         setMovesHistory([]);
         setOpenModal(false)
     }
@@ -122,7 +128,14 @@ function Game() {
 
     return (
         <>
-            <NavBar selectedBot={selectedBot} setSelectedBot={setSelectedBot} allBots={allBots} />
+            <NavBar
+                selectedBot={selectedBot}
+                setSelectedBot={setSelectedBot}
+                allBots={allBots}
+                selectedPos={selectedPos}
+                setSelectedPos={setSelectedPos}
+                allStartingPositions={allStartingPositions}
+            />
             <div className="app-container">
                 <SimpleModal openModal={openModal} setOpenModal={setOpenModal} resetGame={resetGame} title={"Game Over"} desc={`The game ended with a ${gameOverText}`} />
                 <div className="chess-container">

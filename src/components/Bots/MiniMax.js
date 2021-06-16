@@ -37,7 +37,7 @@ const miniMaxRecursive = (chessCopy, depth, allEval, isMax) => {
             allEval[depth - 1].push({ score: getBoardEvaluation(chessCopy.board()), move: moves[i], moves: `${i}/${moves.length - 1}`, isMax: true })
             let currentEval = miniMaxRecursive(chessCopy, depth - 1, allEval, false)[1];
             chessCopy.undo();
-            console.log("Current Eval: " + currentEval + "| Max Eval " + maxEval)
+            //console.log("Current Eval: " + currentEval + "| Max Eval " + maxEval)
             if (currentEval > maxEval) {
                 maxEval = currentEval;
                 bestMove = moves[i];
@@ -70,15 +70,18 @@ const fetchBestMove = async (chessCopy, depth, allEval, isMax) => {
 }
 
 const MiniMax = (chess, updateComputerHistory, setFen) => {
-    const allEval = [[], [], []]
+    const allEval = [[], [], [], []]
     const chessCopy = new Chess(chess.fen());
     // computer response random
-    fetchBestMove(chessCopy, 2, allEval, true).then((bestMove) => {
+    fetchBestMove(chessCopy, 3, allEval, true).then((bestMove) => {
+
         // update position
-        chess.move(bestMove)
-        console.log(allEval)
+        chess.move(bestMove);
+        console.log(allEval);
+
         // add move to history
         updateComputerHistory(bestMove);
+
         // update chessboard
         setFen(chess.fen());
     })
