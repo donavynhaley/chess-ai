@@ -10,13 +10,21 @@ import SimpleModal from '../../common/SimpleModel';
 
 const startingFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 const allBots = ["Random", "MiniMax", "AlphaBeta", "Stockfish"]
+const allStartingPositions = [
+    { name: "Start", fen: startingFen },
+    { name: "Ruy Lopez", fen: "r1bqkbnr/pppp1ppp/2n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 0 1" },
+    { name: "Italian Game", fen: "r1bqkbnr/pppp1ppp/2n5/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 0 1" },
+    { name: "Sicilian Defense", fen: "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 1" },
+    { name: "French Defense", fen: "rnbqkbnr/pppp1ppp/4p3/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 1" },
+]
 function Game() {
     const [chess] = useState(new Chess(startingFen));
     const [fen, setFen] = useState(chess.fen());
     const [movesHistory, setMovesHistory] = useState([]);
     const [selectedBot, setSelectedBot] = useState(allBots[1]);
+    const [selectedPos, setSelectedPos] = useState(allStartingPositions[0])
     const [gameOverText, setGameOverText] = useState('');
-    const [randomBotAvaliableMoves, setRandomBotAvaliableMoves] = useState([]);
+    const [randomBotAvaliableMoves, setRandomBotAvaliableMoves] = useState([""]);
     const [boardSize, setBoardSize] = useState(460);
     const [openModal, setOpenModal] = useState(false)
     const ref = useRef(null);
@@ -62,26 +70,27 @@ function Game() {
     const handlePlayerMove = (playerMove) => {
         // Checks if playermove is valid
         if (chess.move(playerMove)) {
-
             // add move to history
             updatePlayerHistory(playerMove);
+
+            // update chessboard
+            setFen(chess.fen());
 
             // computer response random
             if (selectedBot === allBots[0]) {
                 randomBot(chess, updateComputerHistory, setRandomBotAvaliableMoves, setFen)
             }
             else if (selectedBot === allBots[1]) {
-                MiniMax(chess, updateComputerHistory, setRandomBotAvaliableMoves, setFen)
+                MiniMax(chess, updateComputerHistory, setFen)
             }
 
-            // update chessboard
-            setFen(chess.fen());
+
         }
     }
 
     const resetGame = () => {
         // reset board and game
-        setFen(startingFen);
+        setFen(selectedPos);
         chess.reset();
         setMovesHistory([]);
         setOpenModal(false)
