@@ -16,12 +16,12 @@ const miniMaxRecursive = (chessCopy, depth, allEval, isMax) => {
             // Update move
             chessCopy.move(moves[i])
             // Push board eval to list
-            allEval[depth - 1].push({ score: getBoardEvaluation(chessCopy.fen()), move: moves[i], moves: `${i}/${moves.length - 1}`, isMax: true })
+            allEval[depth - 1].push({ score: getBoardEvaluation(chessCopy.fen()), move: moves[i], currentMove: i, totalMoves: moves.length - 1, isMax: true })
             // Recursive call minimax with lower depth
             let currentEval = miniMaxRecursive(chessCopy, depth - 1, allEval, false)[1];
             // Undo move
             chessCopy.undo();
-            // Sets best move according to currentEval min
+            // Sets best move according to currentEval max
             if (currentEval > maxEval) {
                 maxEval = currentEval;
                 bestMove = moves[i];
@@ -35,7 +35,7 @@ const miniMaxRecursive = (chessCopy, depth, allEval, isMax) => {
             // Update move
             chessCopy.move(moves[i])
             // Push board eval to list
-            allEval[depth - 1].push({ score: getBoardEvaluation(chessCopy.fen()), move: moves[i], moves: `${i}/${moves.length - 1}`, isMax: false })
+            allEval[depth - 1].push({ score: getBoardEvaluation(chessCopy.fen()), move: moves[i], currentMove: i, totalMoves: moves.length - 1, isMax: true })
             // Recursive call minimax with lower depth
             let currentEval = miniMaxRecursive(chessCopy, depth - 1, allEval, true)[1];
             // Undo move
@@ -48,21 +48,79 @@ const miniMaxRecursive = (chessCopy, depth, allEval, isMax) => {
         }
         return [bestMove, minEval]
     }
-
 }
 
 const fetchBestMove = async (chessCopy, depth, allEval, isMax) => {
     const bestMove = await miniMaxRecursive(chessCopy, depth, allEval, isMax)
-    console.log(bestMove)
     return bestMove[0]
 }
 
-const MiniMax = (chess, updateComputerHistory, setFen, setEvalCount) => {
+const toTreeData = (allEval, treeData, depth) => {
+    let i = depth - 1
+    if (i < 0)
+        return treeData
+
+    for (let j = 0; j < allEval[i].length; j++) {
+        treeData.children.push({
+            name: allEval[i][j].move,
+            attributes: {
+                score: allEval[i][j].score,
+            },
+            children: []
+        })
+    }
+    i -= 1
+    if (i < 0)
+        return treeData
+
+    let index = 0
+    for (let j = 0; j < allEval[i].length; j++) {
+        treeData.children[index].children.push({
+            name: allEval[i][j].move,
+            attributes: {
+                score: allEval[i][j].score,
+            },
+            children: []
+        })
+        if (allEval[i][j].currentMove === allEval[i][j].totalMoves) {
+            index += 1
+        }
+    }
+    index = 0
+    let indexTwo = 0
+    i -= 1
+    if (i < 0)
+        return treeData
+
+    for (let j = 0; j < allEval[i].length; j++) {
+        treeData.children[indexTwo].children[index].children.push({
+            name: allEval[i][j].move,
+            attributes: {
+                score: allEval[i][j].score,
+            },
+            children: []
+        })
+        if (allEval[i][j].currentMove === allEval[i][j].totalMoves) {
+            index += 1
+            if (index >= treeData.children[indexTwo].children.length) {
+                indexTwo += 1
+                index = 0
+            }
+        }
+    }
+    return treeData
+}
+const MiniMax = (chess, updateComputerHistory, setFen, setEvalCount, setTreeData, depth) => {
     const allEval = [[], [], []]
+    const treeData = {
+        name: "Start",
+        attributes: {
+            score: getBoardEvaluation(chess.fen()),
+        },
+        children: []
+    }
     const chessCopy = new Chess(chess.fen());
-    console.log(getBoardEvaluation(chess.fen()))
-    // computer response random
-    fetchBestMove(chessCopy, 3, allEval, true).then((bestMove) => {
+    fetchBestMove(chessCopy, depth, allEval, true).then((bestMove) => {
 
         // update position
         chess.move(bestMove);
@@ -73,6 +131,9 @@ const MiniMax = (chess, updateComputerHistory, setFen, setEvalCount) => {
             return evaluation.length
         })
         setEvalCount(totalEvaluations.reduce((a, b) => a + b, 0))
+
+        // convert to tree data
+        setTreeData(toTreeData(allEval, treeData, depth))
         // add move to history
         updateComputerHistory(bestMove);
 

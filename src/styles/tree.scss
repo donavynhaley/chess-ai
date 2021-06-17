@@ -9,13 +9,18 @@
   
   .node__branch > circle {
     fill: $pg-chessboard-black;
+
   }
   
   .node__leaf > circle {
     fill: $pg-chessboard-brown;
     /* Let's also make the radius of leaf nodes larger */
+
   }
   .rd3t-label__title{
       stroke: white !important;
       fill: white;
+  }
+  .rd3t-label__attributes{
+    z-index: 100;
   }

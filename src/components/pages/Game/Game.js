@@ -26,6 +26,7 @@ function Game() {
     const [evalCount, setEvalCount] = useState(0)
     const [gameOverText, setGameOverText] = useState('');
     const [randomBotAvaliableMoves, setRandomBotAvaliableMoves] = useState([]);
+    const [treeData, setTreeData] = useState({})
     const [boardSize, setBoardSize] = useState(460);
     const [openModal, setOpenModal] = useState(false)
     const ref = useRef(null);
@@ -88,7 +89,7 @@ function Game() {
                 randomBot(chess, updateComputerHistory, setRandomBotAvaliableMoves, setFen)
             }
             else if (selectedBot === allBots[1]) {
-                MiniMax(chess, updateComputerHistory, setFen, setEvalCount)
+                MiniMax(chess, updateComputerHistory, setFen, setEvalCount, setTreeData, 3)
             }
         }
     }
@@ -152,7 +153,7 @@ function Game() {
                 </div>
                 <div className="utility-container">
                     <MoveHistory movesHistory={movesHistory} />
-                    <DataVisualization selectedBot={selectedBot} randomBotAvaliableMoves={randomBotAvaliableMoves} allBots={allBots} evalCount={evalCount} />
+                    <DataVisualization selectedBot={selectedBot} randomBotAvaliableMoves={randomBotAvaliableMoves} allBots={allBots} evalCount={evalCount} treeData={treeData} />
                 </div>
             </div>
         </>
