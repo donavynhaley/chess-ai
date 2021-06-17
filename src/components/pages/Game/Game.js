@@ -17,6 +17,7 @@ const allStartingPositions = [
     { name: "Sicilian Defense", fen: "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 1" },
     { name: "French Defense", fen: "rnbqkbnr/pppp1ppp/4p3/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 1" },
 ]
+const allDepth = [1, 2, 3]
 function Game() {
     const [chess] = useState(new Chess(startingFen));
     const [fen, setFen] = useState(chess.fen());
@@ -29,6 +30,7 @@ function Game() {
     const [treeData, setTreeData] = useState({})
     const [boardSize, setBoardSize] = useState(460);
     const [openModal, setOpenModal] = useState(false)
+    const [depth, setDepth] = useState(allDepth[1])
     const ref = useRef(null);
 
     useEffect(() => {
@@ -89,7 +91,7 @@ function Game() {
                 randomBot(chess, updateComputerHistory, setRandomBotAvaliableMoves, setFen)
             }
             else if (selectedBot === allBots[1]) {
-                MiniMax(chess, updateComputerHistory, setFen, setEvalCount, setTreeData, 3)
+                MiniMax(chess, updateComputerHistory, setFen, setEvalCount, setTreeData, depth)
             }
         }
     }
@@ -135,6 +137,9 @@ function Game() {
                 selectedPos={selectedPos}
                 setSelectedPos={setSelectedPos}
                 allStartingPositions={allStartingPositions}
+                depth={depth}
+                setDepth={setDepth}
+                allDepth={allDepth}
             />
             <div className="app-container">
                 <SimpleModal openModal={openModal} setOpenModal={setOpenModal} title={"Game Over"} desc={`The game ended with a ${gameOverText}`} onClick={resetGame} buttonText="Play Again?" />

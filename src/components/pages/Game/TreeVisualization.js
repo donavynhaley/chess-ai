@@ -6,7 +6,8 @@ const TreeVisualization = ({ data }) => {
         <div id="treeWrapper" >
             <Tree
                 data={data}
-                depthFactor={2500}
+                depthFactor={1000}
+                initialDepth={2}
                 rootNodeClassName="node__root"
                 branchNodeClassName="node__branch"
                 leafNodeClassName="node__leaf" />

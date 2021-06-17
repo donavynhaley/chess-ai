@@ -56,7 +56,7 @@ const Selection = (props) => {
                         className={classes.select}
                     >
                         {allOptions && allOptions.map((option, key) => {
-                            if (typeof (option) == "string") {
+                            if (typeof (option) == "string" || typeof (option) == "number") {
                                 return <MenuItem key={key} value={option}>{option}</MenuItem>
 
                             }
