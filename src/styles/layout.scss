@@ -17,6 +17,9 @@
     // scale width with chessboard size
     width: 80%;
     margin-top: 7vh;
+    @media (min-width: 700px) {
+      width: 57%;
+    } 
   }
   
   .utility-container {
