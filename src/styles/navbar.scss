@@ -23,3 +23,9 @@
     color: white;
     background-color: $pg-grey;
   }
+  .MuiAvatar-colorDefault{
+    background-color: $pg-black !important;
+    &:hover{
+      background-color: $pg-pink !important;
+    }
+  }

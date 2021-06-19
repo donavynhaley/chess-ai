@@ -1,5 +1,6 @@
 import React from 'react'
 import Selection from './Selection'
+import AvatarMenu from './AvatarMenu'
 const NavBar = (props) => {
     const {
         selectedBot,
@@ -20,7 +21,7 @@ const NavBar = (props) => {
                 <Selection selected={selectedPos} setSelected={setSelectedPos} allOptions={allStartingPositions} title={"Starting Position"} />
                 <Selection selected={depth} setSelected={setDepth} allOptions={allDepth} title={"Algorithim Depth"} />
             </div>
-
+            <AvatarMenu />
         </div>
     )
 }
