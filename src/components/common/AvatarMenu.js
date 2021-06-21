@@ -42,10 +42,9 @@ const AvatarMenu = () => {
             >
                 {/* <MenuItem onClick={handleClose}>Profile</MenuItem>
                 <MenuItem onClick={handleClose}>Previous Games</MenuItem> */}
-
                 <MenuItem onClick={() => handleSeleciton("Login")}>Login</MenuItem>
                 <MenuItem onClick={() => handleSeleciton("Register")}>Register</MenuItem>
-
+                <MenuItem onClick={() => handleSeleciton("Previous Games")}>Previous Games</MenuItem>
             </Menu>
         </div>
     )
