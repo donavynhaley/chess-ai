@@ -1,5 +1,4 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Button from './Button'
 
@@ -18,7 +17,8 @@ const SimpleModel = (props) => {
             <div className="simple-modal-description">
                 {desc}
             </div>
-            <Button onClick={onClick} text={buttonText} />
+            {buttonText ? <Button onClick={onClick} text={buttonText} /> : null}
+
             <SimpleModel />
         </div>
     )

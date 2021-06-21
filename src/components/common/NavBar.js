@@ -1,6 +1,7 @@
 import React from 'react'
 import Selection from './Selection'
 import AvatarMenu from './AvatarMenu'
+
 const NavBar = (props) => {
     const {
         selectedBot,

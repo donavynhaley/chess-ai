@@ -8,7 +8,8 @@ import {
 } from 'react-router-dom';
 function App() {
   <Switch>
-    <Route path="/play" component={App} />
+    <Route path="/" component={App} />
+    <Route path="/login" component={App} />
   </Switch>
 
 
