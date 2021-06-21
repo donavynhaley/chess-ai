@@ -2,8 +2,6 @@ import React from 'react'
 import Modal from '@material-ui/core/Modal';
 import Button from './Button'
 
-
-
 const SimpleModel = (props) => {
     const { openModal, setOpenModal, title, desc, onClick, buttonText } = props;
 

@@ -6,7 +6,7 @@ const MoveHistory = props => {
     let count = 0;
     const listMoveHistory = movesHistory.map((move) => {
         count++;
-        return <li className={`node`}>{count}. {move.playerMove} {move.computerMove}</li>
+        return <li className={`node`}>{count}. <div className="playerNode">{move.playerMove}</div> <div className="playerNode">{move.computerMove}</div></li>
     })
 
     return (

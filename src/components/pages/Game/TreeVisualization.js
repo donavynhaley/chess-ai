@@ -10,7 +10,9 @@ const TreeVisualization = ({ data }) => {
                 initialDepth={2}
                 rootNodeClassName="node__root"
                 branchNodeClassName="node__branch"
-                leafNodeClassName="node__leaf" />
+                leafNodeClassName="node__leaf" 
+                pathFunc="step"
+                />
         </div>
     )
 }
