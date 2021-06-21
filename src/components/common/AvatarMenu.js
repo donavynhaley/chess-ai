@@ -8,6 +8,7 @@ import LoginForm from './LoginForm'
 const AvatarMenu = () => {
     const [openMenu, setOpenMenu] = useState();
     const [openModal, setOpenModal] = useState(false);
+    const [selected, setSelected ] = useState("")
 
     const handleClick = (e) => {
         setOpenMenu(e.currentTarget)
@@ -18,18 +19,19 @@ const AvatarMenu = () => {
     }
 
     const handleSeleciton = (selection) => {
-        if (selection === "login") {
+        setSelected(selection)
+        if (selection === "Login" || selection === "Register") {
             handleClose()
             setOpenModal(true);
         }
     }
 
     const body = (
-        <LoginForm />
+        <LoginForm isLogin={selected}/>
     )
     return (
         <div>
-            <SimpleModal openModal={openModal} setOpenModal={setOpenModal} title={"Login"} desc={body} />
+            <SimpleModal openModal={openModal} setOpenModal={setOpenModal} title={selected} desc={body} />
             <Avatar aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick} />
             <Menu
                 id="simple-menu"
@@ -41,7 +43,9 @@ const AvatarMenu = () => {
                 {/* <MenuItem onClick={handleClose}>Profile</MenuItem>
                 <MenuItem onClick={handleClose}>Previous Games</MenuItem> */}
 
-                <MenuItem onClick={() => handleSeleciton("login")}>Login</MenuItem>
+                <MenuItem onClick={() => handleSeleciton("Login")}>Login</MenuItem>
+                <MenuItem onClick={() => handleSeleciton("Register")}>Register</MenuItem>
+
             </Menu>
         </div>
     )

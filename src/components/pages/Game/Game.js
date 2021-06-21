@@ -4,8 +4,8 @@ import Chess from "chess.js";
 import MoveHistory from './MoveHistory';
 import DataVisualization from './DataVisualization';
 import NavBar from '../../common/NavBar';
-import randomBot from '../../bots/randomBot';
-import MiniMax from '../../bots/MiniMax'
+import randomBot from '../../Bots/randomBot';
+import MiniMax from '../../Bots/MiniMax';
 import SimpleModal from '../../common/SimpleModel';
 
 const startingFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"

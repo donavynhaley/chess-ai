@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Formik, Form, Field } from 'formik';
 import Button from '@material-ui/core/Button';
 import * as Yup from 'yup';
-
+import { register, login } from '../../api'
 const LoginSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Required'),
     password: Yup.string()
@@ -11,22 +11,27 @@ const LoginSchema = Yup.object().shape({
 });
 
 const initialFormValues = {
-    name: "",
+    email: "",
     password: "",
 }
 
 
-const resetForm = (values) => {
-    Object.keys(values).forEach(key => (values[key] = ""));  //<- Reseting all fields using blank space
-}
+const LoginForm = ({isLogin, closeModal}) => {
 
-const LoginForm = () => {
+    const postLogin = (values) => {
+        isLogin === "Login" ? login(values) : register(values)
+    }
+    
+    const resetForm = (values) => {
+        Object.keys(values).forEach(key => (values[key] = ""));  //<- Reseting all fields using blank space
+    }
+
     return (
         <Formik
             initialValues={initialFormValues}
             validationSchema={LoginSchema}
             onSubmit={values => {
-                resetForm(values)
+                postLogin(values)
             }}
         >
             {({ errors, touched }) => (
@@ -42,7 +47,7 @@ const LoginForm = () => {
                             <div className="error">{errors.password}</div>
                         ) : null}
                     </div>
-                    <Button variant="outlined" color="secondary">
+                    <Button type="submit" variant="outlined" color="secondary">
                         Submit
                     </Button>
                 </Form>
