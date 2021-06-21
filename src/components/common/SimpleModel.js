@@ -24,7 +24,7 @@ const SimpleModel = (props) => {
     )
 
     return (
-        <div class="modal-container">
+        <div className="modal-container">
             <Modal
                 open={openModal}
                 onClose={handleClose}
