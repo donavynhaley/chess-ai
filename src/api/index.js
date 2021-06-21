@@ -8,8 +8,8 @@ const backend = axios.create({
 
 const register = userCredentials => {
     
-    const promise = axios.post(
-        `https://chess-ai-visualizer.herokuapp.com/register`,
+    const promise = backend.post(
+        `register`,
         userCredentials,
     );
 
@@ -23,8 +23,8 @@ const register = userCredentials => {
 
 const login = userCredentials => {
     
-    const promise = axios.post(
-        `https://chess-ai-visualizer.herokuapp.com/login`,
+    const promise = backend.post(
+        `login`,
         userCredentials,
     );
 
