@@ -1,23 +1,22 @@
 import React from 'react'
-import NavBar from './components/common/NavBar'
 import { Game } from './components/pages/Game';
+import PreviousGames from './components/pages/PreviousGames/PreviousGames'
 import {
   Route,
   useHistory,
   Switch,
 } from 'react-router-dom';
 function App() {
-  <Switch>
-    <Route path="/" component={App} />
-    <Route path="/login" component={App} />
-  </Switch>
+
 
 
   return (
     <>
-      <NavBar />
       <div className="app-container">
-        <Game />
+        <Switch>
+          <Route exact path="/" component={Game} />
+          <Route path="/history" component={PreviousGames} />
+        </Switch>
       </div>
     </>
   );

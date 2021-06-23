@@ -29,3 +29,13 @@
       background-color: $pg-pink !important;
     }
   }
+.nav-full {
+  width: 100vw;
+  justify-content: space-between;
+  h1{
+    margin-left: 5%;
+  }
+  div{
+    margin-right: 5%;
+  }
+}

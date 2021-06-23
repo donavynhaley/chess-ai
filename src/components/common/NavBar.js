@@ -12,16 +12,18 @@ const NavBar = (props) => {
         allStartingPositions,
         depth,
         setDepth,
-        allDepth
+        allDepth,
+        className,
     } = props;
     return (
-        <div className="navbar">
+        <div className={`navbar ${className}`}>
             <h1>Chess AI</h1>
-            <div className="selections">
+            {selectedBot ? <div className="selections">
                 <Selection selected={selectedBot} setSelected={setSelectedBot} allOptions={allBots} title={"Select Bot"} />
                 <Selection selected={selectedPos} setSelected={setSelectedPos} allOptions={allStartingPositions} title={"Starting Position"} />
                 <Selection selected={depth} setSelected={setDepth} allOptions={allDepth} title={"Algorithim Depth"} />
-            </div>
+            </div> : null}
+
             <AvatarMenu />
         </div>
     )
