@@ -7,6 +7,7 @@ import NavBar from '../../common/NavBar';
 import randomBot from '../../Bots/randomBot';
 import MiniMax from '../../Bots/MiniMax';
 import SimpleModal from '../../common/SimpleModel';
+import UndoMove from './UndoMove';
 
 const startingFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 const allBots = ["Random", "MiniMax", "AlphaBeta", "Stockfish"]
@@ -55,6 +56,13 @@ function Game() {
     const updateHistory = () => {
         console.log(chess.history())
         setMovesHistory(chess.history());
+    }
+
+    const undo = () => {
+        chess.undo()
+        chess.undo()
+        setFen(chess.fen);
+        updateHistory();
     }
 
     // Handles player move and calls bots move
@@ -136,6 +144,7 @@ function Game() {
                 </div>
                 <div className="utility-container">
                     <MoveHistory movesHistory={movesHistory} />
+                    <UndoMove undo={undo} />
                     <DataVisualization selectedBot={selectedBot} randomBotAvaliableMoves={randomBotAvaliableMoves} allBots={allBots} evalCount={evalCount} treeData={treeData} />
                 </div>
             </div>

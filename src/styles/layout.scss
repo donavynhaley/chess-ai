@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     flex-direction: row;
-    overflow-x: hidden;
+    overflow: hidden;
   }       
   .chess-container {
     display: flex;
@@ -24,6 +24,7 @@
   
   .utility-container {
     width: 20vw;
+    height: 100vh;
     display: flex;
     flex-direction: column;
   }

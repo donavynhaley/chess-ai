@@ -35,7 +35,7 @@ const DataVisualization = (props) => {
 
                 <SimpleModal openModal={openModal} setOpenModal={setOpenModal} title={"Tree"} desc={<TreeVisualization data={treeData} />} onClick={handleClose} buttonText="Close Modal" />
                 <p>{`Postions Evaluated: ${evalCount.toLocaleString()}`}</p>
-                <Button variant="outlined" color="secondary" onClick={handleOpen}>
+                <Button size="large" variant="outlined" color="secondary" onClick={handleOpen}>
                     See Tree
                 </Button>
             </>

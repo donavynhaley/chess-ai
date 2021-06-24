@@ -15,7 +15,7 @@ function App() {
       <div className="app-container">
         <Switch>
           <Route exact path="/" component={Game} />
-          <Route path="/history" component={PreviousGames} />
+          <Route path="/games" component={PreviousGames} />
         </Switch>
       </div>
     </>
