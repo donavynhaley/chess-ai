@@ -110,7 +110,7 @@ const toTreeData = (allEval, treeData, depth) => {
     }
     return treeData
 }
-const MiniMax = (chess, updateComputerHistory, setFen, setEvalCount, setTreeData, depth) => {
+const MiniMax = (chess, updateHistory, setFen, setEvalCount, setTreeData, depth) => {
     const allEval = [[], [], []]
     const treeData = {
         name: "Start",
@@ -134,8 +134,9 @@ const MiniMax = (chess, updateComputerHistory, setFen, setEvalCount, setTreeData
 
         // convert to tree data
         setTreeData(toTreeData(allEval, treeData, depth))
+
         // add move to history
-        updateComputerHistory(bestMove);
+        updateHistory();
 
         // update chessboard
         setFen(chess.fen());

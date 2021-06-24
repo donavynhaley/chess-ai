@@ -1,4 +1,4 @@
-const randomBot = (chess, updateComputerHistory, setRandomBotAvaliableMoves, setFen) => {
+const randomBot = (chess, updateHistory, setRandomBotAvaliableMoves, setFen) => {
     // computer response random
     setTimeout(() => {
 
@@ -14,7 +14,7 @@ const randomBot = (chess, updateComputerHistory, setRandomBotAvaliableMoves, set
             chess.move(computerMove);
 
             // add move to history
-            updateComputerHistory(computerMove);
+            updateHistory(computerMove);
 
             // update chessboard
             setFen(chess.fen());

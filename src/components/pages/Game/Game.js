@@ -51,47 +51,25 @@ function Game() {
         }
     })
 
-    // Add playermove to history
-    const updatePlayerHistory = (newMove) => {
-        const currentMovesHistory = movesHistory;
-        const pieceType = chess.get(newMove.to).type.toUpperCase();
-        let move;
 
-        // do not display pawn
-        if (pieceType === "P") {
-            move = { playerMove: `${newMove.to}` }
-        }
-        else {
-            move = { playerMove: `${pieceType}${newMove.to}` }
-        }
-
-        currentMovesHistory.push(move);
-        setMovesHistory(currentMovesHistory);
-    }
-
-    // Add computer move to history
-    const updateComputerHistory = (computerMove) => {
-        const currentMove = movesHistory[movesHistory.length - 1];
-        const newMove = { ...currentMove, computerMove: computerMove }
-        movesHistory[movesHistory.length - 1] = newMove;
+    const updateHistory = () => {
+        console.log(chess.history())
+        setMovesHistory(chess.history());
     }
 
     // Handles player move and calls bots move
     const handlePlayerMove = (playerMove) => {
         // Checks if playermove is valid
         if (chess.move(playerMove)) {
-            // add move to history
-            updatePlayerHistory(playerMove);
-
             // update chessboard
             setFen(chess.fen());
 
             // computer response random
             if (selectedBot === allBots[0]) {
-                randomBot(chess, updateComputerHistory, setRandomBotAvaliableMoves, setFen)
+                randomBot(chess, updateHistory, setRandomBotAvaliableMoves, setFen)
             }
             else if (selectedBot === allBots[1]) {
-                MiniMax(chess, updateComputerHistory, setFen, setEvalCount, setTreeData, depth)
+                MiniMax(chess, updateHistory, setFen, setEvalCount, setTreeData, depth)
             }
         }
     }
