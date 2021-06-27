@@ -16,7 +16,7 @@ const initialFormValues = {
     password: "",
 }
 
-const LoginForm = ({ isLogin, setOpenModal }) => {
+const LoginForm = ({ isLogin, setOpenModal, setIsLoggedIn }) => {
 
     /* API Calls */
     const backend = axios.create({
@@ -50,6 +50,7 @@ const LoginForm = ({ isLogin, setOpenModal }) => {
             .then(res => {
                 localStorage.setItem('token', res.data.token)
                 console.log(res.data)
+                setIsLoggedIn(true)
                 resetForm(userCredentials)
                 setOpenModal(false)
             })

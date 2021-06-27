@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import { useHistory } from "react-router-dom";
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Avatar from '@material-ui/core/Avatar';
-import SimpleModal from './SimpleModel'
-import LoginForm from './LoginForm'
+import SimpleModal from './SimpleModel';
+import LoginForm from './LoginForm';
 
-const AvatarMenu = () => {
+const AvatarMenu = ({ isLoggedIn, setIsLoggedIn }) => {
     const [openMenu, setOpenMenu] = useState();
     const [openModal, setOpenModal] = useState(false);
     const [selected, setSelected] = useState("")
+    const history = useHistory();
 
     const handleClick = (e) => {
         setOpenMenu(e.currentTarget)
@@ -24,10 +26,16 @@ const AvatarMenu = () => {
             handleClose()
             setOpenModal(true);
         }
+        if (selection === "Home") {
+            history.push("/")
+        }
+        if (selection === "Previous Games") {
+            history.push("/games")
+        }
     }
 
     const body = (
-        <LoginForm isLogin={selected} setOpenModal={setOpenModal} />
+        <LoginForm isLogin={selected} setOpenModal={setOpenModal} setIsLoggedIn={setIsLoggedIn} />
     )
     return (
         <div>
@@ -40,11 +48,19 @@ const AvatarMenu = () => {
                 open={Boolean(openMenu)}
                 onClose={handleClose}
             >
-                {/* <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>Previous Games</MenuItem> */}
-                <MenuItem onClick={() => handleSeleciton("Login")}>Login</MenuItem>
-                <MenuItem onClick={() => handleSeleciton("Register")}>Register</MenuItem>
-                <MenuItem onClick={() => handleSeleciton("Previous Games")}>Previous Games</MenuItem>
+                {isLoggedIn ? (
+                    <>
+                        <MenuItem onClick={() => handleSeleciton("Home")}>Home</MenuItem>
+                        <MenuItem onClick={() => handleSeleciton("Previous Games")}>Previous Games</MenuItem>
+                        <MenuItem onClick={() => handleSeleciton("Sign Out")}>Sign Out</MenuItem>
+                    </>
+                ) :
+                    (
+                        <>
+                            <MenuItem onClick={() => handleSeleciton("Login")}>Login</MenuItem>
+                            <MenuItem onClick={() => handleSeleciton("Register")}>Register</MenuItem>
+                        </>
+                    )}
             </Menu>
         </div>
     )

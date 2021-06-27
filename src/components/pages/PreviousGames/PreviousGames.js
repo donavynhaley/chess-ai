@@ -1,7 +1,7 @@
 import React from 'react'
 import NavBar from '../../common/NavBar'
 import GameReacap from './GameRecap'
-const PreviousGames = () => {
+const PreviousGames = ({ isLoggedIn, setIsLoggedIn }) => {
     const getHistory = () => {
         // get history from backend
     }
@@ -10,7 +10,7 @@ const PreviousGames = () => {
     return (
 
         <>
-            <NavBar className="nav-full" />
+            <NavBar className="nav-full" isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
             <div className="prev-games">
                 <h2>Previous Games</h2>
                 <GameReacap result={"Win"} botType={"MiniMax"} depth={"3"} moveHistory={moveHistory} />

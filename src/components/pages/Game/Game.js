@@ -19,7 +19,7 @@ const allStartingPositions = [
     { name: "French Defense", fen: "rnbqkbnr/pppp1ppp/4p3/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 1" },
 ]
 const allDepth = [1, 2, 3]
-function Game() {
+function Game({ isLoggedIn, setIsLoggedIn }) {
     const [chess] = useState(new Chess(startingFen));
     const [fen, setFen] = useState(chess.fen());
     const [movesHistory, setMovesHistory] = useState([]);
@@ -129,6 +129,8 @@ function Game() {
                 depth={depth}
                 setDepth={setDepth}
                 allDepth={allDepth}
+                isLoggedIn={isLoggedIn}
+                setIsLoggedIn={setIsLoggedIn}
             />
             <div className="app-container">
                 <SimpleModal openModal={openModal} setOpenModal={setOpenModal} title={"Game Over"} desc={`The game ended with a ${gameOverText}`} onClick={resetGame} buttonText="Play Again?" />
