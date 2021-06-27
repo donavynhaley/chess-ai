@@ -8,18 +8,9 @@
     display: flex;
     flex-direction: column;
     width: 80vw;
-    height: 90vh;
+    margin-top: 10vh;
     align-items: center;
     justify-content: center;
-  }
-
-  .chessboard-container{
-    // scale width with chessboard size
-    width: 80%;
-    margin-top: 7vh;
-    @media (min-width: 700px) {
-      width: 57%;
-    } 
   }
   
   .utility-container {

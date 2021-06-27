@@ -35,14 +35,17 @@ function Game() {
     const ref = useRef(null);
 
     useEffect(() => {
-        console.log(ref.current.offsetWidth)
-        setBoardSize(ref.current.offsetWidth);
-
+        const width = ref.current.offsetWidth;
+        if (width < 800) {
+            setBoardSize(width - 200);
+        }
+        else if (width < 1200) {
+            setBoardSize(width - 550)
+        }
     }, [])
 
     useEffect(() => {
         resetGame()
-
     }, [selectedPos])
 
     useEffect(() => {
@@ -129,18 +132,17 @@ function Game() {
             />
             <div className="app-container">
                 <SimpleModal openModal={openModal} setOpenModal={setOpenModal} title={"Game Over"} desc={`The game ended with a ${gameOverText}`} onClick={resetGame} buttonText="Play Again?" />
-                <div className="chess-container">
-                    <div ref={ref} className="chessboard-container">
-                        <Chessboard
-                            width={boardSize}
-                            position={fen}
-                            onDrop={(move) => handlePlayerMove({
-                                from: move.sourceSquare,
-                                to: move.targetSquare,
-                                promotion: "q",
-                            })}
-                        />
-                    </div>
+                <div className="chess-container" ref={ref}>
+                    <Chessboard
+                        width={boardSize}
+                        position={fen}
+                        onDrop={(move) => handlePlayerMove({
+                            from: move.sourceSquare,
+                            to: move.targetSquare,
+                            promotion: "q",
+                        })}
+                        className={"test"}
+                    />
                 </div>
                 <div className="utility-container">
                     <MoveHistory movesHistory={movesHistory} />
