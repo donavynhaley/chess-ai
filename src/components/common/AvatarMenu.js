@@ -37,6 +37,10 @@ const AvatarMenu = ({ isLoggedIn, setIsLoggedIn }) => {
     const body = (
         <LoginForm isLogin={selected} setOpenModal={setOpenModal} setIsLoggedIn={setIsLoggedIn} />
     )
+
+    const loggedInMenu = ["Home", "Previous Games", "Sign Out"]
+    const loggedOutMenu = ["Login", "Register"]
+
     return (
         <div>
             <SimpleModal openModal={openModal} setOpenModal={setOpenModal} title={selected} desc={body} />
@@ -48,19 +52,11 @@ const AvatarMenu = ({ isLoggedIn, setIsLoggedIn }) => {
                 open={Boolean(openMenu)}
                 onClose={handleClose}
             >
-                {isLoggedIn ? (
-                    <>
-                        <MenuItem onClick={() => handleSeleciton("Home")}>Home</MenuItem>
-                        <MenuItem onClick={() => handleSeleciton("Previous Games")}>Previous Games</MenuItem>
-                        <MenuItem onClick={() => handleSeleciton("Sign Out")}>Sign Out</MenuItem>
-                    </>
-                ) :
-                    (
-                        <>
-                            <MenuItem onClick={() => handleSeleciton("Login")}>Login</MenuItem>
-                            <MenuItem onClick={() => handleSeleciton("Register")}>Register</MenuItem>
-                        </>
-                    )}
+                {isLoggedIn ? loggedInMenu.map(item => {
+                    return <MenuItem onClick={() => handleSeleciton(item)}>{item}</MenuItem>
+                }) : loggedOutMenu.map(item => {
+                    return <MenuItem onClick={() => handleSeleciton(item)}>{item}</MenuItem>
+                })}
             </Menu>
         </div>
     )
