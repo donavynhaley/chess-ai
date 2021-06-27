@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import { Formik, Form, Field } from 'formik';
 import Button from '@material-ui/core/Button';
 import * as Yup from 'yup';
-import { register, login } from '../../api'
+import axios from 'axios';
+
 const LoginSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Required'),
     password: Yup.string()
@@ -15,13 +16,53 @@ const initialFormValues = {
     password: "",
 }
 
+const LoginForm = ({ isLogin, setOpenModal }) => {
 
-const LoginForm = ({isLogin, closeModal}) => {
+    /* API Calls */
+    const backend = axios.create({
+        baseURL: process.env.REACT_APP_BE_URL
+    })
 
+    const register = userCredentials => {
+        const promise = backend.post(
+            `register`,
+            userCredentials,
+        );
+
+        promise
+            .then(res => {
+                console.log(res.data)
+                resetForm(userCredentials)
+                setOpenModal(false)
+            })
+            .catch(e => {
+                console.log(e)
+            });
+    }
+
+    const login = userCredentials => {
+        const promise = backend.post(
+            `login`,
+            userCredentials,
+        );
+
+        promise
+            .then(res => {
+                localStorage.setItem('token', res.data.token)
+                console.log(res.data)
+                resetForm(userCredentials)
+                setOpenModal(false)
+            })
+            .catch(e => {
+                console.log(e)
+            });
+    }
+
+    /* Form Logic */
     const postLogin = (values) => {
         isLogin === "Login" ? login(values) : register(values)
     }
-    
+
     const resetForm = (values) => {
         Object.keys(values).forEach(key => (values[key] = ""));  //<- Reseting all fields using blank space
     }

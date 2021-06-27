@@ -8,7 +8,7 @@ import LoginForm from './LoginForm'
 const AvatarMenu = () => {
     const [openMenu, setOpenMenu] = useState();
     const [openModal, setOpenModal] = useState(false);
-    const [selected, setSelected ] = useState("")
+    const [selected, setSelected] = useState("")
 
     const handleClick = (e) => {
         setOpenMenu(e.currentTarget)
@@ -27,7 +27,7 @@ const AvatarMenu = () => {
     }
 
     const body = (
-        <LoginForm isLogin={selected}/>
+        <LoginForm isLogin={selected} setOpenModal={setOpenModal} />
     )
     return (
         <div>
