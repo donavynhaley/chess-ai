@@ -8,9 +8,10 @@ import randomBot from '../../Bots/randomBot';
 import MiniMax from '../../Bots/MiniMax';
 import SimpleModal from '../../common/SimpleModel';
 import UndoMove from './UndoMove';
+import axios from 'axios'
 
 const startingFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
-const allBots = ["Random", "MiniMax", "AlphaBeta", "Stockfish"]
+const allBots = ["Random", "MiniMax", "AlphaBeta"]
 const allStartingPositions = [
     { name: "Start", fen: startingFen },
     { name: "Caro-Kann Defense", fen: "rnbqkbnr/pp1ppppp/2p5/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 1" },
@@ -43,6 +44,9 @@ function Game({ isLoggedIn, setIsLoggedIn }) {
         else if (width < 1200) {
             setBoardSize(width - 550)
         }
+        if(localStorage.getItem("token")){
+            setIsLoggedIn(true)
+        }
     }, [])
 
     useEffect(() => {
@@ -50,12 +54,12 @@ function Game({ isLoggedIn, setIsLoggedIn }) {
     }, [selectedPos])
 
     useEffect(() => {
+        console.log("check")
         // Check for win
         if (chess.game_over()) {
             handleGameOver();
         }
-    })
-
+    }, [movesHistory])
 
     const updateHistory = () => {
         console.log(chess.history())
@@ -95,7 +99,7 @@ function Game({ isLoggedIn, setIsLoggedIn }) {
     }
 
     const handleGameOver = () => {
-        console.log(chess.turn())
+        // Check who won
         if(chess.turn() === "b"){
             setGameWon(true)
         }
@@ -123,8 +127,42 @@ function Game({ isLoggedIn, setIsLoggedIn }) {
         // Open game over modal
         setOpenModal(true)
 
+        // Send game to user is logged in backend
+        if(isLoggedIn)
+            postGame()
+    }
+    const postGame = () => {
+      const data = {
+          game:  {
+            result: gameWon,
+            botType: selectedBot,
+            depth: depth,
+            moves: movesHistory
+          },
+          email: "fuzzmasterd02@gmail.com"
     }
 
+    const config = {
+        headers: {
+            'Authorization': `Basic ${localStorage.getItem("token")}`
+        }
+    } 
+    const backend = axios.create({
+        baseURL: process.env.REACT_APP_BE_URL
+    })
+    const promise = backend.post(
+        `add-game`,
+        data,
+        config
+    );
+    promise
+    .then(res => {
+        console.log(res.data)
+    })
+    .catch(e => {
+        console.log(e)
+    });
+    }
 
     return (
         <>
