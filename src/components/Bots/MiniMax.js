@@ -51,10 +51,17 @@ const miniMaxRecursive = (chessCopy, depth, allEval, isMax) => {
 }
 
 const fetchBestMove = async (chessCopy, depth, allEval, isMax) => {
-    const bestMove = await miniMaxRecursive(chessCopy, depth, allEval, isMax)
+    let bestMove = await miniMaxRecursive(chessCopy, depth, allEval, isMax)
+    if(bestMove[1] === 0){
+        const moves = chessCopy.moves();
+        bestMove[0] = moves[getRandomMNum(0, moves.length)];
+    }
     return bestMove[0]
 }
 
+const getRandomMNum = (min, max) => {
+    return Math.floor(Math.random() * (max-min) + min)
+}
 const toTreeData = (allEval, treeData, depth) => {
     let i = depth - 1
     if (i < 0)
