@@ -96,7 +96,7 @@ function Game({ isLoggedIn, setIsLoggedIn }) {
 
     const handleGameOver = () => {
         console.log(chess.turn())
-        if(gameWon === "b"){
+        if(chess.turn() === "b"){
             setGameWon(true)
         }
         else{
