@@ -27,6 +27,7 @@ function Game({ isLoggedIn, setIsLoggedIn }) {
     const [selectedPos, setSelectedPos] = useState(allStartingPositions[0].fen)
     const [evalCount, setEvalCount] = useState(0)
     const [gameOverText, setGameOverText] = useState('');
+    const [gameWon, setGameWon] = useState(false)
     const [randomBotAvaliableMoves, setRandomBotAvaliableMoves] = useState([]);
     const [treeData, setTreeData] = useState({})
     const [boardSize, setBoardSize] = useState(460);
@@ -94,20 +95,28 @@ function Game({ isLoggedIn, setIsLoggedIn }) {
     }
 
     const handleGameOver = () => {
+        console.log(chess.turn())
+        if(gameWon === "b"){
+            setGameWon(true)
+        }
+        else{
+            setGameWon(false)
+        }
+
         // Check how game ended
         if (chess.in_checkmate()) {
             setGameOverText("Checkmate")
         }
-        if (chess.in_draw()) {
+        else if (chess.in_draw()) {
             setGameOverText("Draw")
         }
-        if (chess.in_stalemate()) {
+        else if (chess.in_stalemate()) {
             setGameOverText("Stalemate")
         }
-        if (chess.in_threefold_repetition()) {
+        else if (chess.in_threefold_repetition()) {
             setGameOverText("Threefold Repetition")
         }
-        if (chess.insufficient_material()) {
+        else if (chess.insufficient_material()) {
             setGameOverText("Insufficient Material")
         }
 
@@ -133,7 +142,7 @@ function Game({ isLoggedIn, setIsLoggedIn }) {
                 setIsLoggedIn={setIsLoggedIn}
             />
             <div className="app-container">
-                <SimpleModal openModal={openModal} setOpenModal={setOpenModal} title={"Game Over"} desc={`The game ended with a ${gameOverText}`} onClick={resetGame} buttonText="Play Again?" />
+                <SimpleModal openModal={openModal} setOpenModal={setOpenModal} title={`Game Over You ${gameWon? "Won" : "Lost"}`} desc={`The game ended with a ${gameOverText}`} onClick={resetGame} buttonText="Play Again?" />
                 <div className="chess-container" ref={ref}>
                     <Chessboard
                         width={boardSize}
