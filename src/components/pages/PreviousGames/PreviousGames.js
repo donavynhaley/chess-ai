@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import NavBar from '../../common/NavBar'
 import GameReacap from './GameRecap'
 const PreviousGames = ({ isLoggedIn, setIsLoggedIn }) => {
@@ -6,9 +6,12 @@ const PreviousGames = ({ isLoggedIn, setIsLoggedIn }) => {
         // get history from backend
     }
 
-    const moveHistory = [{ computerMove: "Nc6", playerMove: "f3" }, { computerMove: "Rb8", playerMove: "e4" }, { computerMove: "Ra8", playerMove: "Bc4" }, { computerMove: "Rb8", playerMove: "d4" }, { computerMove: "Ne5", playerMove: "d5" }, { computerMove: "Nxc4", playerMove: "Qd4" }]
+    useEffect(() => {
+        getHistory()
+    }, [])
+    
+    const moveHistory = ["Nc6", "f3", "Rb8", "e4",  "Ra8", "Bc4" , "Rb8", "d4" ,"Ne5", "d5", "Nxc4", "Qd4" ]
     return (
-
         <>
             <NavBar className="nav-full" isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
             <div className="prev-games">

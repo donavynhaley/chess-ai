@@ -1,7 +1,7 @@
 import React from 'react';
 
 const MoveHistory = props => {
-    const { movesHistory } = props;
+    const { movesHistory, className } = props;
 
     let line = 0;
     const listMoveHistory = () => {
@@ -18,9 +18,9 @@ const MoveHistory = props => {
     }
 
     return (
-        <div className="move-history">
-            <h2>Move History</h2>
-            <ul className="move-list">
+        <div className={`move-history`}>
+            {className ? <h4>Move History</h4> : <h2>Move History</h2>}
+            <ul className={`move-list ${className ? className: ""}`}>
                 {listMoveHistory()}
             </ul>
         </div>
