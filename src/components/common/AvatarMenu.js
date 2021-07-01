@@ -32,6 +32,11 @@ const AvatarMenu = ({ isLoggedIn, setIsLoggedIn }) => {
         if (selection === "Previous Games") {
             history.push("/games")
         }
+        if (selection === "Sign Out") {
+            localStorage.removeItem("email")
+            localStorage.removeItem("token")
+            window.location.reload()
+        }
     }
 
     const body = (

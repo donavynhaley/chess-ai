@@ -49,6 +49,7 @@ const LoginForm = ({ isLogin, setOpenModal, setIsLoggedIn }) => {
         promise
             .then(res => {
                 localStorage.setItem('token', res.data.token)
+                localStorage.setItem('email', res.data.email)
                 console.log(res.data)
                 setIsLoggedIn(true)
                 resetForm(userCredentials)

@@ -131,6 +131,7 @@ function Game({ isLoggedIn, setIsLoggedIn }) {
         if(isLoggedIn)
             postGame()
     }
+
     const postGame = () => {
       const data = {
           game:  {
@@ -142,26 +143,26 @@ function Game({ isLoggedIn, setIsLoggedIn }) {
           email: "fuzzmasterd02@gmail.com"
     }
 
-    const config = {
-        headers: {
-            'Authorization': `Basic ${localStorage.getItem("token")}`
-        }
-    } 
-    const backend = axios.create({
-        baseURL: process.env.REACT_APP_BE_URL
-    })
-    const promise = backend.post(
-        `add-game`,
-        data,
-        config
-    );
-    promise
-    .then(res => {
-        console.log(res.data)
-    })
-    .catch(e => {
-        console.log(e)
-    });
+        const config = {
+            headers: {
+                'Authorization': `Basic ${localStorage.getItem("token")}`
+            }
+        } 
+        const backend = axios.create({
+            baseURL: process.env.REACT_APP_BE_URL
+        })
+        const promise = backend.post(
+            `add-game`,
+            data,
+            config
+        );
+        promise
+            .then(res => {
+                console.log(res.data)
+            })
+            .catch(e => {
+                console.log(e)
+            });
     }
 
     return (
