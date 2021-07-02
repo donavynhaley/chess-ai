@@ -17,11 +17,16 @@
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
+    overflow-x: hidden;
     padding-left: 20px;
+  }
+  .move {
+    display: flex;
   }
   .node{
     display: flex;
     align-items: center;
+
   }
   .playerNode{
     cursor: pointer;

@@ -1,4 +1,5 @@
 import React from 'react';
+import Divider from '@material-ui/core/Divider';
 
 const MoveHistory = props => {
     const { movesHistory, className } = props;
@@ -8,18 +9,20 @@ const MoveHistory = props => {
         return movesHistory.map((move, index, arr) => {
             if (index % 2 === 0) {
                 line++;
-                return <li key={index} className={`node`}>
-                    {line}.
-                    <div className="playerNode">{move}</div>
+                return (<li key={index} className={`node`}>
+                    <div className="line-number">{line}.</div>
+                        <div className="move">
+                        <div className="playerNode">{move}</div>
                     <div className="playerNode">{arr[index + 1]}</div>
-                </li>
+                    </div>
+                </li>)
             }
         })
     }
 
     return (
         <div className={`move-history`}>
-            {className ? <h4>Move History</h4> : <h2>Move History</h2>}
+            {className ? "" : <h2>Move History</h2>}
             <ul className={`move-list ${className ? className: ""}`}>
                 {listMoveHistory()}
             </ul>

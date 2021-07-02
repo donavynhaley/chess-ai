@@ -36,36 +36,48 @@ function Game({ isLoggedIn, setIsLoggedIn }) {
     const [depth, setDepth] = useState(allDepth[1])
     const ref = useRef(null);
 
+    // updates board size
     useEffect(() => {
-        const width = ref.current.offsetWidth;
-        if (width < 800) {
-            setBoardSize(width - 200);
+        const handleBoardResize = () => {
+            const width = ref.current.offsetWidth;
+            if (width < 1200) {
+                setBoardSize(width - 100);
+            }
+            else if (width <= 1920) {
+                setBoardSize(width - 700)
+            }
+            else if (width >= 1800) {
+                setBoardSize(width - 1000)
+            }
+            
+            if(localStorage.getItem("token")){
+                setIsLoggedIn(true)
+            }
         }
-        else if (width < 1200) {
-            setBoardSize(width - 550)
-        }
-        if(localStorage.getItem("token")){
-            setIsLoggedIn(true)
-        }
+        window.addEventListener('resize', handleBoardResize)
+        return () => window.removeEventListener('resize', handleBoardResize);
+        
     }, [])
 
+    // updates board if new starting position is selected
     useEffect(() => {
         resetGame()
     }, [selectedPos])
 
+    // checks for win
     useEffect(() => {
-        console.log("check")
-        // Check for win
         if (chess.game_over()) {
             handleGameOver();
         }
     }, [movesHistory])
 
+    // updates move history
     const updateHistory = () => {
         console.log(chess.history())
         setMovesHistory(chess.history());
     }
 
+    // logic to undo a move
     const undo = () => {
         chess.undo()
         chess.undo()
@@ -90,14 +102,15 @@ function Game({ isLoggedIn, setIsLoggedIn }) {
         }
     }
 
+    // reset board and game
     const resetGame = () => {
-        // reset board and game
         setFen(selectedPos);
         chess.load(selectedPos);
         setMovesHistory([]);
         setOpenModal(false)
     }
 
+    // Handles game over and if user is logged in sends to backend
     const handleGameOver = () => {
         // Check who won
         if(chess.turn() === "b"){
@@ -132,6 +145,7 @@ function Game({ isLoggedIn, setIsLoggedIn }) {
             postGame()
     }
 
+    // Sends game data to backend
     const postGame = () => {
       const data = {
           game:  {
@@ -140,7 +154,7 @@ function Game({ isLoggedIn, setIsLoggedIn }) {
             depth: depth,
             moves: movesHistory
           },
-          email: "fuzzmasterd02@gmail.com"
+          email: localStorage.getItem('email')
     }
 
         const config = {
