@@ -16,7 +16,7 @@
   .move-list {
     display: flex;
     flex-direction: column;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
     padding-left: 20px;
   }
@@ -32,6 +32,7 @@
     cursor: pointer;
     padding: 0.5rem;
     border-radius: 0.5rem;
+    font-size: 1.2rem;
     &:hover{
       background-color: $pg-black;
     }

@@ -32,9 +32,8 @@ const DataVisualization = (props) => {
     const miniMaxBot = () => {
         return (
             <>
-
                 <SimpleModal openModal={openModal} setOpenModal={setOpenModal} title={"Tree"} desc={<TreeVisualization data={treeData} />} onClick={handleClose} buttonText="Close Modal" />
-                <p>{`Postions Evaluated: ${evalCount.toLocaleString()}`}</p>
+                <div className="evaluation"><h3>Postions Evaluated</h3> <p>{evalCount.toLocaleString()}</p></div>
                 <Button size="large" variant="outlined" color="secondary" onClick={handleOpen}>
                     See Tree
                 </Button>

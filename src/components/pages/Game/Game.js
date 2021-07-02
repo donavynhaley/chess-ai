@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react';
 import Chessboard from 'chessboardjsx';
 import Chess from "chess.js";
 import MoveHistory from './MoveHistory';
@@ -7,8 +7,9 @@ import NavBar from '../../common/NavBar';
 import randomBot from '../../Bots/randomBot';
 import MiniMax from '../../Bots/MiniMax';
 import SimpleModal from '../../common/SimpleModel';
+import Notification from '../../common/Notification';
 import UndoMove from './UndoMove';
-import axios from 'axios'
+import axios from 'axios';
 
 const startingFen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
 const allBots = ["Random", "MiniMax", "AlphaBeta"]
@@ -34,10 +35,15 @@ function Game({ isLoggedIn, setIsLoggedIn }) {
     const [boardSize, setBoardSize] = useState(460);
     const [openModal, setOpenModal] = useState(false)
     const [depth, setDepth] = useState(allDepth[1])
+    const [openAlert, setOpenAlert] = useState(false)
+    const [alertText, setAlertText] = useState("")
+    const [alertSeverity, setAlertSeverity] = useState("")
+
     const ref = useRef(null);
 
     // updates board size
     useEffect(() => {
+        console.log("resize")
         const handleBoardResize = () => {
             const width = ref.current.offsetWidth;
             if (width < 1200) {
@@ -54,9 +60,9 @@ function Game({ isLoggedIn, setIsLoggedIn }) {
                 setIsLoggedIn(true)
             }
         }
+        handleBoardResize()
         window.addEventListener('resize', handleBoardResize)
         return () => window.removeEventListener('resize', handleBoardResize);
-        
     }, [])
 
     // updates board if new starting position is selected
@@ -194,6 +200,7 @@ function Game({ isLoggedIn, setIsLoggedIn }) {
                 isLoggedIn={isLoggedIn}
                 setIsLoggedIn={setIsLoggedIn}
             />
+            <Notification text={alertText} severity={alertSeverity} openAlert={openAlert} setOpenAlert={setOpenAlert}/>
             <div className="app-container">
                 <SimpleModal openModal={openModal} setOpenModal={setOpenModal} title={`Game Over You ${gameWon? "Won" : "Lost"}`} desc={`The game ended with a ${gameOverText}`} onClick={resetGame} buttonText="Play Again?" />
                 <div className="chess-container" ref={ref}>

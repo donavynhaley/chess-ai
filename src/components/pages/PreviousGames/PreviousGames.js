@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import NavBar from '../../common/NavBar'
 import GameReacap from './GameRecap'
 import axios from 'axios'
-import Paper from '@material-ui/core/Paper';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // get history from backend
 const PreviousGames = ({ isLoggedIn, setIsLoggedIn }) => {
@@ -43,13 +43,16 @@ const PreviousGames = ({ isLoggedIn, setIsLoggedIn }) => {
     return (
         <>
             <NavBar className="nav-full" isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
-            <div className="prev-games">
+            {
+            gameHistory.length > 0 
+            ? <div className="prev-games">
                 <h2>Previous Games</h2>
-                
                 {gameHistory.map((game) => {
                     return <GameReacap result={game.result ? "Win" : "Loss"} botType={game.botType} depth={game.depth} moveHistory={game.moves} />
                 })}
             </div>
+            : <div className="loader"><CircularProgress color="secondary" /></div>
+            }
         </>
     )
 }
