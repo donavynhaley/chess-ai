@@ -32,7 +32,7 @@ function Game({ isLoggedIn, setIsLoggedIn }) {
     const [gameWon, setGameWon] = useState(false)
     const [randomBotAvaliableMoves, setRandomBotAvaliableMoves] = useState([]);
     const [treeData, setTreeData] = useState({})
-    const [boardSize, setBoardSize] = useState(460);
+    const [boardSize, setBoardSize] = useState(500);
     const [openModal, setOpenModal] = useState(false)
     const [depth, setDepth] = useState(allDepth[1])
     const [openAlert, setOpenAlert] = useState(false)
@@ -43,10 +43,9 @@ function Game({ isLoggedIn, setIsLoggedIn }) {
 
     // updates board size
     useEffect(() => {
-        console.log("resize")
         const handleBoardResize = () => {
             const width = ref.current.offsetWidth;
-            if (width < 1200) {
+            if (width < 1000) {
                 setBoardSize(width - 100);
             }
             else if (width <= 1920) {
@@ -55,8 +54,8 @@ function Game({ isLoggedIn, setIsLoggedIn }) {
             else if (width >= 1800) {
                 setBoardSize(width - 1000)
             }
-            
-            if(localStorage.getItem("token")){
+
+            if (localStorage.getItem("token")) {
                 setIsLoggedIn(true)
             }
         }
@@ -126,10 +125,10 @@ function Game({ isLoggedIn, setIsLoggedIn }) {
     // Handles game over and if user is logged in sends to backend
     const handleGameOver = () => {
         // Check who won
-        if(chess.turn() === "b"){
+        if (chess.turn() === "b") {
             setGameWon(true)
         }
-        else{
+        else {
             setGameWon(false)
         }
 
@@ -154,31 +153,31 @@ function Game({ isLoggedIn, setIsLoggedIn }) {
         setOpenModal(true)
 
         // Send game to user is logged in backend
-        if(isLoggedIn){
+        if (isLoggedIn) {
             postGame()
         }
-        else{
+        else {
             alert("Please Login to save game", "")
         }
     }
 
     // Sends game data to backend
     const postGame = () => {
-      const data = {
-          game:  {
-            result: gameWon,
-            botType: selectedBot,
-            depth: depth,
-            moves: movesHistory
-          },
-          email: localStorage.getItem('email')
-    }
+        const data = {
+            game: {
+                result: gameWon,
+                botType: selectedBot,
+                depth: depth,
+                moves: movesHistory
+            },
+            email: localStorage.getItem('email')
+        }
 
         const config = {
             headers: {
                 'Authorization': `Basic ${localStorage.getItem("token")}`
             }
-        } 
+        }
         const backend = axios.create({
             baseURL: process.env.REACT_APP_BE_URL
         })
@@ -213,9 +212,9 @@ function Game({ isLoggedIn, setIsLoggedIn }) {
                 setIsLoggedIn={setIsLoggedIn}
                 alert={alert}
             />
-            <Notification text={alertText} type={alertType} openAlert={openAlert} setOpenAlert={setOpenAlert}/>
+            <Notification text={alertText} type={alertType} openAlert={openAlert} setOpenAlert={setOpenAlert} />
             <div className="app-container">
-                <SimpleModal openModal={openModal} setOpenModal={setOpenModal} title={`Game Over You ${gameWon? "Won" : "Lost"}`} desc={`The game ended with a ${gameOverText}`} onClick={resetGame} buttonText="Play Again?" />
+                <SimpleModal openModal={openModal} setOpenModal={setOpenModal} title={`Game Over You ${gameWon ? "Won" : "Lost"}`} desc={`The game ended with a ${gameOverText}`} onClick={resetGame} buttonText="Play Again?" />
                 <div className="chess-container" ref={ref}>
                     <Chessboard
                         width={boardSize}
