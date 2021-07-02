@@ -15,7 +15,8 @@ const NavBar = (props) => {
         allDepth,
         className,
         isLoggedIn,
-        setIsLoggedIn
+        setIsLoggedIn,
+        alert
     } = props;
     return (
         <div className={`navbar ${className}`}>
@@ -26,7 +27,7 @@ const NavBar = (props) => {
                 <Selection selected={depth} setSelected={setDepth} allOptions={allDepth} title={"Algorithim Depth"} />
             </div> : null}
 
-            <AvatarMenu isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+            <AvatarMenu isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} alert={alert}/>
         </div>
     )
 }

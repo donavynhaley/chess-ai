@@ -1,0 +1,15 @@
+.alert{
+    .MuiSnackbarContent-message{
+        display: flex;
+        align-items: center;
+    }
+    .MuiSvgIcon-root{
+        margin-right: 1rem;
+    }
+}
+.success .MuiSvgIcon-root{
+    color: $pg-success
+}
+.failure .MuiSvgIcon-root{
+    color: $pg-failure
+}

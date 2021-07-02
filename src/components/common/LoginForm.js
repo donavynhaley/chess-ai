@@ -16,7 +16,7 @@ const initialFormValues = {
     password: "",
 }
 
-const LoginForm = ({ isLogin, setOpenModal, setIsLoggedIn }) => {
+const LoginForm = ({ isLogin, setOpenModal, setIsLoggedIn, alert }) => {
 
     /* API Calls */
     const backend = axios.create({
@@ -32,10 +32,12 @@ const LoginForm = ({ isLogin, setOpenModal, setIsLoggedIn }) => {
         promise
             .then(res => {
                 console.log(res.data)
+                alert("Registration Complete", "success")
                 resetForm(userCredentials)
                 setOpenModal(false)
             })
             .catch(e => {
+                alert("Registration Failed", "failure")
                 console.log(e)
             });
     }
@@ -51,11 +53,13 @@ const LoginForm = ({ isLogin, setOpenModal, setIsLoggedIn }) => {
                 localStorage.setItem('token', res.data.token)
                 localStorage.setItem('email', res.data.email)
                 console.log(res.data)
+                alert("Login Complete", "success")
                 setIsLoggedIn(true)
                 resetForm(userCredentials)
                 setOpenModal(false)
             })
             .catch(e => {
+                alert("Login Failed", "failure")
                 console.log(e)
             });
     }

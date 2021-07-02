@@ -6,7 +6,7 @@ import Avatar from '@material-ui/core/Avatar';
 import SimpleModal from './SimpleModel';
 import LoginForm from './LoginForm';
 
-const AvatarMenu = ({ isLoggedIn, setIsLoggedIn }) => {
+const AvatarMenu = ({ isLoggedIn, setIsLoggedIn, alert }) => {
     const [openMenu, setOpenMenu] = useState();
     const [openModal, setOpenModal] = useState(false);
     const [selected, setSelected] = useState("")
@@ -40,7 +40,7 @@ const AvatarMenu = ({ isLoggedIn, setIsLoggedIn }) => {
     }
 
     const body = (
-        <LoginForm isLogin={selected} setOpenModal={setOpenModal} setIsLoggedIn={setIsLoggedIn} />
+        <LoginForm isLogin={selected} setOpenModal={setOpenModal} setIsLoggedIn={setIsLoggedIn} alert={alert}/>
     )
 
     const loggedInMenu = ["Home", "Previous Games", "Sign Out"]

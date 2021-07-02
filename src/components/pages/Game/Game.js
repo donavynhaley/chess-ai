@@ -37,7 +37,7 @@ function Game({ isLoggedIn, setIsLoggedIn }) {
     const [depth, setDepth] = useState(allDepth[1])
     const [openAlert, setOpenAlert] = useState(false)
     const [alertText, setAlertText] = useState("")
-    const [alertSeverity, setAlertSeverity] = useState("")
+    const [alertType, setAlertType] = useState("success")
 
     const ref = useRef(null);
 
@@ -75,8 +75,15 @@ function Game({ isLoggedIn, setIsLoggedIn }) {
         if (chess.game_over()) {
             handleGameOver();
         }
+
     }, [movesHistory])
 
+    // Pops up an alert
+    const alert = (text, type) => {
+        setAlertText(text)
+        setAlertType(type)
+        setOpenAlert(true)
+    }
     // updates move history
     const updateHistory = () => {
         console.log(chess.history())
@@ -147,8 +154,12 @@ function Game({ isLoggedIn, setIsLoggedIn }) {
         setOpenModal(true)
 
         // Send game to user is logged in backend
-        if(isLoggedIn)
+        if(isLoggedIn){
             postGame()
+        }
+        else{
+            alert("Please Login to save game", "")
+        }
     }
 
     // Sends game data to backend
@@ -178,6 +189,7 @@ function Game({ isLoggedIn, setIsLoggedIn }) {
         );
         promise
             .then(res => {
+                alert("Game Saved", "")
                 console.log(res.data)
             })
             .catch(e => {
@@ -199,8 +211,9 @@ function Game({ isLoggedIn, setIsLoggedIn }) {
                 allDepth={allDepth}
                 isLoggedIn={isLoggedIn}
                 setIsLoggedIn={setIsLoggedIn}
+                alert={alert}
             />
-            <Notification text={alertText} severity={alertSeverity} openAlert={openAlert} setOpenAlert={setOpenAlert}/>
+            <Notification text={alertText} type={alertType} openAlert={openAlert} setOpenAlert={setOpenAlert}/>
             <div className="app-container">
                 <SimpleModal openModal={openModal} setOpenModal={setOpenModal} title={`Game Over You ${gameWon? "Won" : "Lost"}`} desc={`The game ended with a ${gameOverText}`} onClick={resetGame} buttonText="Play Again?" />
                 <div className="chess-container" ref={ref}>

@@ -8,6 +8,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 const PreviousGames = ({ isLoggedIn, setIsLoggedIn }) => {
     const [gameHistory, setGameHistory] = useState([])
 
+
     const getHistory = () => {
         const backend = axios.create({
             baseURL: process.env.REACT_APP_BE_URL
